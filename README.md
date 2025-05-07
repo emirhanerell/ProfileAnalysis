@@ -47,3 +47,17 @@
 2. Yeni bir branch oluşturun:  
    ```bash
    git checkout -b feature/amazing-feature
+3. Değişikliklerinizi commit edin:
+   ```bash
+   git commit -m 'Add some amazing feature'
+4.Branch'inizi push edin:
+   ```bash
+   git push origin feature/amazing-feature
+
+
+
+
+
+
+
+   
