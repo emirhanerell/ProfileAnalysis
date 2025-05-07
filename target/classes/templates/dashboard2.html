@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <a th:href="@{/logout}">Logout</a>
+        <table>
+            <thead>
+                <tr>
+                    <th data-key="name">Sütun 1</th>
+                    <th>Sütun 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Satır 1, Hücre 1</td>
+                    <td>Satır 1, Hücre 2</td>
+                </tr>
+                <tr>
+                    <td>Satır 2, Hücre 1</td>
+                    <td>Satır 2, Hücre 2</td>
+                </tr>
+                <tr>
+                    <td>Satır 3, Hücre 1</td>
+                    <td>Satır 3, Hücre 2</td>
+                </tr>
+                <tr>
+                    <td>Satır 4, Hücre 1</td>
+                    <td>Satır 4, Hücre 2</td>
+                </tr>
+                <tr>
+                    <td>Satır 5, Hücre 1</td>
+                    <td>Satır 5, Hücre 2</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.3"></script>
+</head>
+
+<body>
+    <div layout:fragment="content" class="container">
+        <h4 class="text-center my-4">ADMİN DASHBOARD</h4>
+        <div class="row" id="dateFilter">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="startDate">Baslangic Tarihi Seçin:</label>
+                    <input type="text" id="startDate" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="endDate">Bitis Tarihi Seçin:</label>
+                    <input type="text" id="endDate" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label></label>
+                <button style="margin-top: 14%" class="btn btn-primary" onclick="getStatistics()">İstatistikleri
+                    Getir</button>
+            </div>
+            <div class="col-md-2">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5%">
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="avgResponseTimeChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="browserCountChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="requestStatusCountByDateChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="cpuUsageByServerAndDateChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="disUsageByServerAndDateChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="deviceTypeCountChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="endpointCallCountByDateChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="userAgentRequestCountChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="cityCountChart"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chart-box">
+                    <div id="countryCountChart"></div>
+                </div>
+            </div>
+        </div>
+        <h4>Network Usage Table - TOP 10</h4>
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover align-middle text-center" id="networkUsageTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Server Name</th>
+                        <th>Check Minute</th>
+                        <th>Avg Network Usage(Bps)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <h4>Memory Usage Table - TOP 10</h4>
+        <div class="table-responsive mt-4">
+            <table class="table table-bordered table-hover align-middle text-center" id="memoryUsageTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Server Name</th>
+                        <th>Check Minute</th>
+                        <th>Avg Memory Usage(%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <script>
+
+            $(document).ready(function () {
+
+                $('#startDate').flatpickr({
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i",
+                    time_24hr: true,
+                });
+
+                $('#endDate').flatpickr({
+                    enableTime: true,
+                    dateFormat: "Y-m-d H:i",
+                    time_24hr: true,
+                });
+            });
+
+            function getStatistics() {
+
+                var startDate = $('#startDate').val();
+                var isoStartDate = new Date(startDate).toISOString();
+
+                var endDate = $('#endDate').val();
+                var isoEndDate = new Date(endDate).toISOString();
+
+                var dataToSend = {
+                    startDate: isoStartDate,
+                    endDate: isoEndDate
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/statisticData/allStatistics",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(dataToSend),
+                    success: function (response) {
+                        initAverageResponseTimeByDate(response.averageResponseTimeByDateStatistics);
+                        requestStatusCountByDate(response.requestStatusCountByDateStatistics);
+                        cpuUsageByServerAndDate(response.cpuUsageByServerAndMinuteStatistics);
+                        diskUsageByServerAndDate(response.diskUsageByServerAndMinuteStatistics);
+                        endPointCallCountByDate(response.endpointCallCountByDateStatistics);
+                        userAgentRequestCounts(response.userAgentRequestCountsStatistics);
+                        topTenNetworkUsageTableDataBind(response.networkUsageByServerAndMinuteStatistics);
+                        topTenMemoryUsageTableDataBind(response.memoryUsageByServerAndMinuteStatistics);
+                        browserCountByDate(response.browserCountByDateStatistics);
+                        deviceTypeCountByDate(response.deviceTypeCountByDateStatistics);
+                        cityCountByDate(response.cityCountByDateStatistics);
+                        countryCountByDate(response.countryCountByDateStatistics);
+                    },
+                    error: function (error) {
+                        alert("Hata oluştu: ", error);
+                    }
+                });
+            }
+
+            function initAverageResponseTimeByDate(statisticList) {
+                var timeGroups = statisticList.map(item => item.timeGroup);
+                var averageResponseTimes = statisticList.map(item => item.avgResponseTimeMs);
+
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 350
+                    },
+                    series: [{
+                        name: 'Average Response Time (ms)',
+                        data: averageResponseTimes
+                    }],
+                    xaxis: {
+                        categories: timeGroups,
+                        type: 'datetime', // Tarih formatı
+                    },
+                    yaxis: {
+                        title: {
+                            text: 'Average Response Time (ms)'
+                        }
+                    },
+                    title: {
+                        text: 'Average Response Time By Date',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#avgResponseTimeChart"), options);
+                chart.render();
+            }
+
+            function requestStatusCountByDate(statisticList) {
+                var timeGroups = statisticList.map(item => item.timeGroup);
+                var successRequestCounts = statisticList.map(item => item.successCount);
+                var failedRequestCounts = statisticList.map(item => item.failureCount);
+
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 400,
+                        toolbar: { show: false }
+                    },
+                    series: [
+                        {
+                            name: 'Success',
+                            data: successRequestCounts
+                        },
+                        {
+                            name: 'Failure',
+                            data: failedRequestCounts
+                        }
+                    ],
+                    xaxis: {
+                        categories: timeGroups,
+                        title: { text: 'Date' }
+                    },
+                    yaxis: {
+                        title: { text: 'Count' }
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    markers: {
+                        size: 4
+                    },
+                    colors: ['#00C851', '#ff4444'],
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        text: 'Request Status Count By Date',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#requestStatusCountByDateChart"), options);
+                chart.render();
+            }
+
+            function cpuUsageByServerAndDate(cpuUsageData) {
+                const servers = {};
+
+                cpuUsageData.forEach(item => {
+                    if (!servers[item.server_name]) {
+                        servers[item.server_name] = [];
+                    }
+                    servers[item.server_name].push({
+                        x: item.check_minute,
+                        y: item.avg_cpu_usage
+                    });
+                });
+
+                const seriesData = Object.keys(servers).map(serverName => ({
+                    name: serverName,
+                    data: servers[serverName]
+                }));
+
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 450,
+                        toolbar: { show: true },
+                        zoom: { enabled: true }
+                    },
+                    series: seriesData,
+                    xaxis: {
+                        type: 'datetime',
+                        title: { text: 'Time' },
+                        labels: {
+                            datetimeUTC: false,
+                            format: 'HH:mm'
+                        }
+                    },
+                    yaxis: {
+                        title: { text: 'CPU Usage (%)' },
+                        min: 0,
+                        max: 100
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    markers: {
+                        size: 3
+                    },
+                    colors: ['#FF5733', '#33C1FF', '#8D33FF', '#33FF57', '#FFC300'],
+                    tooltip: {
+                        x: {
+                            format: 'yyyy-MM-dd HH:mm'
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        text: 'CPU Usage By Server & Date',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#cpuUsageByServerAndDateChart"), options);
+                chart.render();
+            }
+
+            function diskUsageByServerAndDate(diskUsageData) {
+                const servers = {};
+                diskUsageData.forEach(item => {
+                    if (!servers[item.server_name]) {
+                        servers[item.server_name] = [];
+                    }
+                    servers[item.server_name].push({
+                        x: item.check_minute,
+                        y: item.avg_disk_usage
+                    });
+                });
+
+                const seriesData = Object.keys(servers).map(serverName => ({
+                    name: serverName,
+                    data: servers[serverName]
+                }));
+
+                const options = {
+                    chart: {
+                        type: 'line',
+                        height: 450,
+                        toolbar: { show: true },
+                        zoom: { enabled: true }
+                    },
+                    series: seriesData,
+                    xaxis: {
+                        type: 'datetime',
+                        title: { text: 'Time' },
+                        labels: {
+                            datetimeUTC: false,
+                            format: 'HH:mm'
+                        }
+                    },
+                    yaxis: {
+                        title: { text: 'Disk Usage (%)' },
+                        min: 0,
+                        max: 100
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    markers: {
+                        size: 3
+                    },
+                    colors: ['#FF33A1', '#3380FF', '#33FFAA', '#FF8F33', '#8333FF'],
+                    tooltip: {
+                        x: {
+                            format: 'yyyy-MM-dd HH:mm'
+                        }
+                    },
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        text: 'Disk Usage By Server And Date',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#disUsageByServerAndDateChart"), options);
+                chart.render();
+            }
+
+            function endPointCallCountByDate(endpointCallData) {
+                const endpoints = endpointCallData.map(item => item.endpoint);
+                const callCounts = endpointCallData.map(item => item.callCount);
+
+                const options = {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    series: [
+                        {
+                            name: 'Call Count',
+                            data: callCounts
+                        }
+                    ],
+                    xaxis: {
+                        categories: endpoints,
+                        title: { text: 'Endpoint' },
+                        labels: {
+                            rotate: -45
+                        }
+                    },
+                    yaxis: {
+                        title: { text: 'Number of Calls' },
+                        min: 0
+                    },
+                    colors: ['#008FFB'],
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 4,
+                            horizontal: false,
+                            columnWidth: '50%'
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " calls";
+                            }
+                        }
+                    },
+                    legend: {
+                        show: false
+                    },
+                    title: {
+                        text: 'Endpoint Call Count By Date',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#endpointCallCountByDateChart"), options);
+                chart.render();
+            }
+
+            function userAgentRequestCounts(userAgentData) {
+                const labels = userAgentData.map(item => item.user_agent);
+                const series = userAgentData.map(item => item.request_count);
+
+                const options = {
+                    chart: {
+                        type: 'pie',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    labels: labels,
+                    series: series,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " requests";
+                            }
+                        }
+                    },
+                    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val, opts) {
+                            return opts.w.globals.labels[opts.seriesIndex] + ": " + val.toFixed(1) + "%";
+                        }
+                    },
+                    title: {
+                        text: 'Request Count By User Agent',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#userAgentRequestCountChart"), options);
+                chart.render();
+            }
+
+            function topTenNetworkUsageTableDataBind(data) {
+                const tableBody = document.querySelector("#networkUsageTable tbody");
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+
+                    const serverNameCell = document.createElement("td");
+                    serverNameCell.textContent = item.server_name;
+
+                    const checkMinuteCell = document.createElement("td");
+                    checkMinuteCell.textContent = item.check_minute;
+
+                    const avgNetworkUsageCell = document.createElement("td");
+                    avgNetworkUsageCell.textContent = item.avg_network_usage != null ? item.avg_network_usage.toFixed(2) : "-";
+
+                    row.appendChild(serverNameCell);
+                    row.appendChild(checkMinuteCell);
+                    row.appendChild(avgNetworkUsageCell);
+
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function topTenMemoryUsageTableDataBind(data) {
+                const tableBody = document.querySelector("#memoryUsageTable tbody");
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+
+                    const serverNameCell = document.createElement("td");
+                    serverNameCell.textContent = item.server_name;
+
+                    const checkMinuteCell = document.createElement("td");
+                    checkMinuteCell.textContent = item.check_minute;
+
+                    const avgMemoryUsageCell = document.createElement("td");
+                    avgMemoryUsageCell.textContent = item.avg_memory_usage != null ? item.avg_memory_usage.toFixed(2) + "%" : "-";
+
+                    row.appendChild(serverNameCell);
+                    row.appendChild(checkMinuteCell);
+                    row.appendChild(avgMemoryUsageCell);
+
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function browserCountByDate(browserData) {
+                const labels = browserData.map(item => item.browser);
+                const series = browserData.map(item => item.browser_count);
+
+                const options = {
+                    chart: {
+                        type: 'pie',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    labels: labels,
+                    series: series,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val;
+                            }
+                        }
+                    },
+                    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val, opts) {
+                            return opts.w.globals.labels[opts.seriesIndex] + ": " + val.toFixed(1) + "%";
+                        }
+                    },
+                    title: {
+                        text: 'Browser Statistics',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#browserCountChart"), options);
+                chart.render();
+            }
+
+            function deviceTypeCountByDate(deviceTypeData) {
+
+                const labels = deviceTypeData.map(item => item.device_type);
+                const series = deviceTypeData.map(item => item.device_type_count);
+
+                const options = {
+                    chart: {
+                        type: 'pie',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    labels: labels,
+                    series: series,
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val;
+                            }
+                        }
+                    },
+                    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560', '#775DD0'],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function (val, opts) {
+                            return opts.w.globals.labels[opts.seriesIndex] + ": " + val.toFixed(1) + "%";
+                        }
+                    },
+                    title: {
+                        text: 'Browser Statistics',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#deviceTypeCountChart"), options);
+                chart.render();
+
+            }
+
+            function cityCountByDate(cityData) {
+                const endpoints = cityData.map(item => item.city);
+                const callCounts = cityData.map(item => item.cityCount);
+
+                const options = {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    series: [
+                        {
+                            name: 'Call Count',
+                            data: callCounts
+                        }
+                    ],
+                    xaxis: {
+                        categories: endpoints,
+                        title: { text: 'Endpoint' },
+                        labels: {
+                            rotate: -45
+                        }
+                    },
+                    yaxis: {
+                        title: { text: 'Number of Calls' },
+                        min: 0
+                    },
+                    colors: ['#008FFB'],
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 4,
+                            horizontal: false,
+                            columnWidth: '50%'
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " calls";
+                            }
+                        }
+                    },
+                    legend: {
+                        show: false
+                    },
+                    title: {
+                        text: 'City Count Statistic',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#cityCountChart"), options);
+                chart.render();
+            }
+
+            function countryCountByDate(countryData) {
+                const endpoints = countryData.map(item => item.country);
+                const callCounts = countryData.map(item => item.countryCount);
+
+                const options = {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                        toolbar: { show: true }
+                    },
+                    series: [
+                        {
+                            name: 'Call Count',
+                            data: callCounts
+                        }
+                    ],
+                    xaxis: {
+                        categories: endpoints,
+                        title: { text: 'Endpoint' },
+                        labels: {
+                            rotate: -45
+                        }
+                    },
+                    yaxis: {
+                        title: { text: 'Number of Calls' },
+                        min: 0
+                    },
+                    colors: ['#008FFB'],
+                    plotOptions: {
+                        bar: {
+                            borderRadius: 4,
+                            horizontal: false,
+                            columnWidth: '50%'
+                        }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val + " calls";
+                            }
+                        }
+                    },
+                    legend: {
+                        show: false
+                    },
+                    title: {
+                        text: 'Country Count Statistic',
+                        align: 'center'
+                    }
+                };
+
+                const chart = new ApexCharts(document.querySelector("#countryCountChart"), options);
+                chart.render();
+            }
+        </script>
+    </div>
+</body>
+
+</html>

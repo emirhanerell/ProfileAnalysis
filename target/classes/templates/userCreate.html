@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <form id="save-user-form" th:action="@{/user/create}" th:object="${registerRequest}" method="post">
+            <div class="form-group">
+                <label>Name:</label>
+                <input class="form-control" type="text" th:field="*{name}" required />
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                <input class="form-control" type="text" th:field="*{email}" required />
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input id="password" class="form-control" type="password" th:field="*{password}" required />
+            </div>
+            <div class="form-group">
+                <label>Confirm Password:</label>
+                <input id="confirm-password" class="form-control" type="password" required />
+            </div>
+            <div class="form-group">
+                <label>Role:</label>
+                <select class="form-control" th:field="*{role}">
+                    <option th:each="role : ${T(com.tesh.model.Role).values()}" th:value="${role}" th:text="${role}">
+                    </option>
+                </select>
+            </div>
+            <br>
+            <button class="btn btn-success" type="button" onclick="saveUser()">Create</button>
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                <span th:text="${errorMessage}"></span>
+            </div>
+            <div id="toastDanger" class="toast toast-danger fade hide" role="alert" aria-live="assertive"
+                aria-atomic="true">
+                <div class="toast-header">
+                    <i class="bi bi-circle me-2"></i>
+                    <strong class="me-auto">Error</strong> <small></small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">Password and Confirm Password can not be null and they should be equal</div>
+            </div>
+        </form>
+        <script>
+            function saveUser() {
+                var password = document.getElementById("password").value;
+                var confirmPassword = document.getElementById("confirm-password").value;
+
+                if (password && confirmPassword && password === confirmPassword) {
+                    $('#save-user-form').submit();
+                } else {
+                    var toastElement = document.getElementById("toastDanger");
+                    var toast = new bootstrap.Toast(toastElement);
+                    toast.show();
+                }
+            }
+        </script>
+    </div>
+</body>
+
+</html>

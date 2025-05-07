@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e9085bc7-c658-4538-a50e-bfef392bda1a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/adminLTE/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/adminLTE/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/adminLTE/js/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/adminLTE/js/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/dashboard2.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/dashboard2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/requestResponseMetricDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/requestResponseMetricDetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/requestResponseMetricIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/requestResponseMetricIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/serverMetricIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/serverMetricIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/userCreate.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/userCreate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/userDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/userDetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/userIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/userIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/userUpdate.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/userUpdate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/adminLTE/js/translations.json" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/adminLTE/js/translations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/requestResponseMetricIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/requestResponseMetricIndex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/serverMetricIndex.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/serverMetricIndex.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2wdYdEqsUMIf4hXLBXMlBmD5b2G" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ProfileAnalysisApplication.executor": "Debug",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Maven.profile-analysis.executor": "Debug",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.ProfileAnalysisApplication.executor": "Debug",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Kerim_w10/Desktop/TolgaPrj/profile-analysis/src/main/resources/static/adminLTE/css",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Kerim_w10\Desktop\TolgaPrj\profile-analysis\src\main\resources\static\adminLTE\css" />
+      <recent name="C:\Users\Kerim_w10\Desktop\TolgaPrj\profile-analysis\src\main\resources\templates" />
+      <recent name="C:\Users\Hazar\Documents\GitHub\profile-analysis\src\main\resources\adminLTE" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hazar\Documents\GitHub\profile-analysis\src\main\resources\templates" />
+      <recent name="C:\Users\Kerim_w10\Desktop\TolgaPrj\profile-analysis\src\main\resources\templates\error" />
+      <recent name="C:\Users\Kerim_w10\Desktop\TolgaPrj\profile-analysis\src\main\resources\templates" />
+      <recent name="C:\Users\Tolga\Desktop\Project\eORS\profile-analysis\src\main\resources\static\adminLTE\js" />
+      <recent name="C:\Users\Tolga\Desktop\Project\eORS\profile-analysis\src\main\resources\static\adminLTE" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.tesh.controller" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ProfileAnalysisApplication">
+    <configuration name="ProfileAnalysisApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.tesh.starter.ProfileAnalysisApplication" />
+      <module name="profile-analysis" />
+      <option name="PROGRAM_PARAMETERS" value="$MAVEN_REPOSITORY$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.tesh.starter.ProfileAnalysisApplication" />
+      <module name="profile-analysis" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProfileAnalysisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="profile-analysis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.tesh.starter.ProfileAnalysisApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.ProfileAnalysisApplication" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e9085bc7-c658-4538-a50e-bfef392bda1a" name="Changes" comment="" />
+      <created>1741639319508</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1741639319508</updated>
+      <workItem from="1741639320843" duration="112000" />
+      <workItem from="1741639450061" duration="86000" />
+      <workItem from="1741639549183" duration="2277000" />
+      <workItem from="1741818449929" duration="846000" />
+      <workItem from="1741819318770" duration="5111000" />
+      <workItem from="1741891303937" duration="6385000" />
+      <workItem from="1742067719622" duration="1342000" />
+      <workItem from="1742247323012" duration="1663000" />
+      <workItem from="1742495589628" duration="12171000" />
+      <workItem from="1742673439175" duration="2458000" />
+      <workItem from="1742728308668" duration="373000" />
+      <workItem from="1742841028339" duration="5714000" />
+      <workItem from="1742921318482" duration="6426000" />
+      <workItem from="1743622112314" duration="2850000" />
+      <workItem from="1744048584390" duration="679000" />
+      <workItem from="1744065268680" duration="55000" />
+      <workItem from="1745095851609" duration="3128000" />
+      <workItem from="1745665197999" duration="7704000" />
+      <workItem from="1745757239225" duration="5000" />
+      <workItem from="1746104220483" duration="3055000" />
+      <workItem from="1746304485294" duration="13286000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tesh/controller/UserController.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tesh/service/UserService.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

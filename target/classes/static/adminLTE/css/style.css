@@ -1,0 +1,161 @@
+input[type="checkbox"] {
+  display: none;
+}
+
+#button {
+  position: relative;
+  display: block;
+  width: 150px;
+  height: 60px;
+  background-color: #b80404;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 20px auto;
+  transition: background-color 0.3s ease;
+}
+
+#knob {
+  width: 50px;
+  height: 50px;
+  background-color: #fff;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  transition: 0.4s ease left, 0.4s ease background-color;
+  background-image: url(https://i.hizliresim.com/ltsw1d9.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+#language-text {
+  position: absolute;
+  top: 50%;
+  left: 70px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: color 0.4s ease, left 0.4s ease;
+}
+
+#language-toggle:checked + #button {
+  background-color: #0d1366;
+}
+
+#language-toggle:checked + #button #knob {
+  left: 95px;
+  background-color: #ffffff;
+  background-image: url(https://m.media-amazon.com/images/I/61dHFpZmRSL._AC_UF1000,1000_QL80_.jpg);
+}
+
+#language-toggle:checked + #button #language-text {
+  color: #ffffff;
+  left: 20px;
+  transition: left 0.4s ease;
+}
+
+/* Follow Me :) */
+input[type="checkbox"] {
+  display: none;
+}
+
+#button {
+  position: relative;
+  display: block;
+  width: 100px;
+  height: 35px;
+  background-color: #b80404;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+}
+
+#knob {
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  border-radius: 50%;
+  transition: 0.4s ease left, 0.4s ease background-color;
+  background-image: url(https://i.hizliresim.com/ltsw1d9.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+#language-text {
+  position: absolute;
+  top: 47%;
+  left: 36px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: color 0.4s ease, left 0.4s ease;
+}
+
+#language-toggle:checked + #button {
+  background-color: #0d1366;
+}
+
+#language-toggle:checked + #button #knob {
+  left: 71px;
+  background-color: #ffffff;
+  background-image: url(https://m.media-amazon.com/images/I/61dHFpZmRSL._AC_UF1000,1000_QL80_.jpg);
+}
+
+#language-toggle:checked + #button #language-text {
+  color: #ffffff;
+  left: 20px;
+  transition: left 0.4s ease;
+}
+.welcome-card {
+  margin: 80px auto;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.chart-box {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 20px;
+  min-height: 297px;
+}
+
+.spinner-area {
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Diğer her şeyin üstünde */
+  overflow: hidden!important;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <h1 data-key="change_password">TEST. </h1>
+        <br/>
+        <div class="card" style="width: 100%;">
+            <h5 class="card-header">Card title</h5>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <table id="example" class="table  table-striped stripe row-border order-column hover">
+                    <thead>
+                    <tr>
+                        <th>Server Name</th>
+                        <th>Server Ip</th>
+                        <th>Check Date</th>
+                        <th>Cpu Usage</th>
+                        <th>Memory Usage</th>
+                        <th>Disk Usage</th>
+                        <th>Network Usage</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${serverDetailsList}">
+                        <td th:text="${item.serverName}"></td>
+                        <td th:text="${item.serverIp}"></td>
+                        <td th:text="${item.checkDate}"></td>
+                        <td th:text="${item.cpuUsage}"></td>
+                        <td th:text="${item.memoryUsage}"></td>
+                        <td th:text="${item.diskUsage}"></td>
+                        <td th:text="${item.networkUsage}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+    </div>
+</body>
+
+</html>

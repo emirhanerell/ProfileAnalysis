@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div>
+            <label><strong>Request Content :</strong></label>
+            <div th:text="${details.requestContent}"></div>
+        </div>
+        <div>
+            <label><strong>Response Content :</strong></label>
+            <div th:text="${details.responseContent}"></div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/adminLTE/css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-box login">
+            <form>
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" name="email" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Password" required id="password">
+                    <i class='bx bxs-lock-alt toggle-password' id="togglePassword"></i>
+                </div>
+                <div class="forgot-link">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+        <div class="form-box register">
+            <form action="#">
+                <h1>Registration</h1>
+                <div class="input-box">
+                    <input type="text" placeholder="Name" name="name" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" placeholder="Email" name="email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="Password" required id="register_password" name="password">
+                    <i class='bx bxs-lock-alt toggle-password' id="register_togglePassword"></i>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>Hello, Welcome!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
+            </div>
+            <div class="toggle-panel toggle-right">
+                <h1>Welcome Back!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+
+
+
+    document.querySelector('.login form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        const formData = new URLSearchParams();
+        formData.append('email', email);
+        formData.append('password', password);
+
+        try {
+            const response = await axios.post('/user/login', formData.toString(), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            window.location.href = response.data; // <- "/dashboard"
+
+        } catch (error) {
+            console.error('Login hatası:', error.response?.data || error.message);
+            alert("Giriş başarısız, bilgileri kontrol edin.");
+        }
+    });
+
+
+    document.querySelector('.register form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const name = document.querySelector('.register input[name="name"]').value;
+        const email = document.querySelector('.register input[name="email"]').value;
+        const password = document.querySelector('.register input[name="password"]').value;
+
+        const formData = new URLSearchParams();
+        formData.append('email', email);
+        formData.append('name', name);
+        formData.append('password', password);
+
+        try {
+            const response = await axios.post('/user/create', formData.toString(), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
+            alert("Kayıt başarılı, giriş yapabilirsiniz.");
+            container.classList.remove('active');
+        } catch (error) {
+            console.error('Kayıt hatası:', error.response?.data || error.message);
+            alert("Kayıt başarısız, bilgileri kontrol edin.");
+        }
+    });
+
+    const container = document.querySelector('.container');
+    const registerBtn = document.querySelector('.register-btn');
+    const loginBtn = document.querySelector('.login-btn');
+
+    registerBtn.addEventListener('click', () => {
+        container.classList.add('active');
+    })
+
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove('active');
+    })
+
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#password');
+
+    togglePassword.addEventListener('click', () => {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        if (type === 'text') {
+            togglePassword.classList.remove('bxs-lock-alt');
+            togglePassword.classList.add('bx-lock-open-alt');
+        } else {
+            togglePassword.classList.remove('bx-lock-open-alt');
+            togglePassword.classList.add('bxs-lock-alt');
+        }
+    });
+
+    const register_togglePassword = document.querySelector('#register_togglePassword');
+    const register_passwordInput = document.querySelector('#register_password');
+
+    register_togglePassword.addEventListener('click', () => {
+        const type = register_passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        register_passwordInput.setAttribute('type', type);
+        if (type === 'text') {
+            register_togglePassword.classList.remove('bxs-lock-alt');
+            register_togglePassword.classList.add('bx-lock-open-alt');
+        } else {
+            register_togglePassword.classList.remove('bx-lock-open-alt');
+            register_togglePassword.classList.add('bxs-lock-alt');
+        }
+    });
+</script>
+
+</html>

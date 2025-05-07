@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <table id="example" class="display">
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Endpoint</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Request Date</th>
+                    <th>Response Date</th>
+                    <th>User-Agent</th>
+                    <th>Device Type</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${requestResponseList}">
+                    <td th:text="${item.method}"></td>
+                    <td th:text="${item.endpoint}"></td>
+                    <td th:text="${item.duration}"></td>
+                    <td th:text="${item.status}"></td>
+                    <td th:text="${item.requestDate}"></td>
+                    <td th:text="${item.responseDate}"></td>
+                    <td th:text="${item.userAgent}"></td>
+                    <td th:text="${item.deviceType}"></td>
+                    <td>
+                        <a class="btn btn-primary"
+                            th:href="@{/requestResponseStatistics/detail/{id}(id=${item.id})}">Detail</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+    </div>
+</body>
+
+</html>
